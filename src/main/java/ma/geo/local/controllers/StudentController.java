@@ -1,6 +1,7 @@
 package ma.geo.local.controllers;
 
 import ma.geo.local.models.StudentDTO;
+import ma.geo.local.models.StudentIdDTO;
 import ma.geo.local.services.StudentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,27 +23,37 @@ public class StudentController {
     }
 
     @PostMapping
-    public Long save(StudentDTO dto) {
-        LOGGER.debug("start method save");
+    public Long save(@RequestBody  StudentDTO dto) {
+        LOGGER.debug("start method save dto : {} ",dto);
         return studentService.save(dto);
     }
 
     @PutMapping
-    public Long update(StudentDTO dto) {
-        LOGGER.debug("start method update");
+    public Long update(@RequestBody StudentDTO dto) {
+        LOGGER.debug("start method update dto : {} ",dto);
         return studentService.update(dto);
     }
 
-    @DeleteMapping("/{id}")
-    public Boolean delete(Long id) {
-        LOGGER.debug("start method delete");
-        return studentService.delete(id);
+    @DeleteMapping("/{id}/{code}")
+    public Boolean delete(@PathVariable("id") long id,@PathVariable("code") String code) {
+        LOGGER.debug("start method findById id : {} code : {} ",id,code);
+        StudentIdDTO idDto=new StudentIdDTO(id,code);
+        return studentService.deleteById(idDto);
     }
 
     @GetMapping
     public List<StudentDTO> selectAll() {
         LOGGER.debug("start method select All");
         return studentService.selectAll();
+    }
+
+
+    @GetMapping("/{id111}/{code111}")
+    public StudentDTO findById(@PathVariable("id111") long id,@PathVariable("code111") String code){
+        LOGGER.debug("start method findById id : {} code : {} ",id,code);
+        StudentIdDTO idDto=new StudentIdDTO(id,code);
+        return studentService.findById(idDto);
+
     }
 
 }

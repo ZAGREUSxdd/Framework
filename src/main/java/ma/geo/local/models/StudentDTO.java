@@ -1,35 +1,53 @@
-package ma.geo.local.mappers;
+package ma.geo.local.models;
 
-import ma.geo.local.entities.StudentEntity;
-import ma.geo.local.models.StudentDTO;
-import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-@Component(value = "mapper1")
-public class StudentMapper {
+public class StudentDTO {
 
-    public StudentEntity studentDtoToEntity(StudentDTO dto) {
-        StudentEntity studentEntity = new StudentEntity();
-        studentEntity.setId(dto.getId());
-        studentEntity.setName(dto.getName());
-        return studentEntity;
+    private StudentIdDTO studentId;
+    private String name;
+    private List<CourseDTO> courses;
+    private AdresseDTO adresse;
+
+    public StudentIdDTO getStudentId() {
+        return studentId;
     }
 
-    public StudentDTO studentEntityToDto(StudentEntity studentEntity) {
-        StudentDTO dto = new StudentDTO();
-        dto.setId(studentEntity.getId());
-        dto.setName(studentEntity.getName());
-        return dto;
+    public void setStudentId(StudentIdDTO studentId) {
+        this.studentId = studentId;
     }
 
-    public List<StudentDTO> studentEntiesToDtos(List<StudentEntity> studentEntities) {
-        if(studentEntities!=null&&!studentEntities.isEmpty()){
-            return studentEntities.stream().map(studentEntity -> studentEntityToDto(studentEntity)).collect(Collectors.toList());
-        }else {
-            return new ArrayList<>();
-        }
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<CourseDTO> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<CourseDTO> courses) {
+        this.courses = courses;
+    }
+
+    public AdresseDTO getAdresse() {
+        return adresse;
+    }
+
+    public void setAdresse(AdresseDTO adresse) {
+        this.adresse = adresse;
+    }
+
+    @Override
+    public String toString() {
+        return "StudentDTO{" +
+                "studentId=" + studentId +
+                ", name='" + name + '\'' +
+                ", courses=" + courses +
+                ", adresse=" + adresse +
+                '}';
     }
 }
